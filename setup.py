@@ -2,8 +2,8 @@ from setuptools import setup, find_packages
 
 setup(
     name='cmsplugin-journal',
-    version='0.1',
-    description='This is a news app/plugin for the django-cms 2',
+    version='0.1.1',
+    description='This is a news app/plugin for the django-cms 2.1',
     author='Fajran Iman Rusadi',
     author_email='fajran@gmail.com',
     url='http://bitbucket.org/fajran/journal/',
