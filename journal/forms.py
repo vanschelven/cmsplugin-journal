@@ -13,7 +13,7 @@ class EntryForm(forms.ModelForm):
         model = Entry
         
     def _get_widget(self):
-        plugins = plugin_pool.get_text_enabled_plugins(placeholder=None)
+        plugins = plugin_pool.get_text_enabled_plugins(placeholder=None, page=None)
         if USE_TINYMCE and "tinymce" in settings.INSTALLED_APPS:
             from journal.widgets.tinymce_widget import TinyMCEEditor
             return TinyMCEEditor(installed_plugins=plugins)
