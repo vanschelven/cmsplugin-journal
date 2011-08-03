@@ -85,5 +85,3 @@ class LatestEntryPlugin(CMSPlugin):
     template = models.CharField(_('Template name'), max_length=255, default='journal/latest.html',
                                 null=True, blank=True)
 
-    class Meta:
-        app_label = 'cmsplugin'
