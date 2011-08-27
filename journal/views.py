@@ -6,6 +6,9 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.shortcuts import render_to_response
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
+from django.utils.safestring import mark_safe
+
+from cms.utils.html import clean_html
 
 from journal.models import Entry
 
@@ -132,5 +135,6 @@ def entry(request, year, month, day, slug, categories=(), paginate_by=10,
     return render_to_response(template, {
         'date': date,
         'entry': item,
+        'entry_content': mark_safe(clean_html(item.content, full=False)),
         'latest': queryset[:5],
         }, context_instance=RequestContext(request)) 
