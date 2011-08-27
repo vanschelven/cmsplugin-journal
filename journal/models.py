@@ -79,9 +79,5 @@ class LatestEntryPlugin(CMSPlugin):
     title = models.CharField(_('Title'), max_length=255)
     limit = models.PositiveIntegerField(_('Number of entries to show'), 
                     help_text=_('Limits the number of entries that will be displayed'))
-    category = models.ManyToManyField(Category, null=True)
-    base_path = models.CharField(_('Path to the entries'), max_length=255,
-                    help_text=_('Base path set to the entries on chosen categories. Check the urls configuration.'))
-    template = models.CharField(_('Template name'), max_length=255, default='journal/latest.html',
-                                null=True, blank=True)
+    category = models.ManyToManyField(Category, blank=True, null=True, help_text=_("Leave this field blank to match all categories"))
 

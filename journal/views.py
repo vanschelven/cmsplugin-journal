@@ -129,6 +129,8 @@ def entry(request, year, month, day, slug, categories=(), paginate_by=10,
     if template_name is not None:
         template = '%s_%s' % (template_name, template)
     template = 'journal/%s' % template
-    return render_to_response(template, {'date': date, 'entry': item},
-                              context_instance=RequestContext(request))
-
+    return render_to_response(template, {
+        'date': date,
+        'entry': item,
+        'latest': queryset[:5],
+        }, context_instance=RequestContext(request)) 

@@ -19,14 +19,6 @@ class CMSLatestEntryPlugin(CMSPluginBase):
         """
             Render the latest news
         """
-        template = instance.template
-        if template is not None:
-            template = template.strip()
-            if len(template) == 0:
-                template = None
-        if template is not None:
-            instance.render_template = template
-
         categories = instance.category.all()
         if len(categories) > 0:
             query = map(lambda category: Q(category=category), 
@@ -35,10 +27,8 @@ class CMSLatestEntryPlugin(CMSPluginBase):
         else:
             query = Q()
         latest = Entry.published.filter(query)[:instance.limit]
-        base_path = instance.base_path.rstrip(' /')
         context.update({
             'title': instance.title,
-            'base_path': base_path,
             'instance': instance,
             'latest': latest,
             'placeholder': placeholder,
