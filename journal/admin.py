@@ -23,6 +23,7 @@ class EntryAdmin(admin.ModelAdmin):
 
     fieldsets = ((None, {'fields': ('title', 'slug', 'category')}),
                  ('Entry', {'fields': ('excerpt', 'content')}),
+                 ('Image', {'fields': ('image', 'alignment')}),
                  ('Publishing', {'fields': ('is_published', 'pub_date')}))
     
     save_as = True

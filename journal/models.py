@@ -37,6 +37,8 @@ class Entry(models.Model):
                         help_text=_('A slug is a short name which uniquely identifies the news item for this day'))
     excerpt         = models.TextField(_('Excerpt'), blank=True)
     content         = models.TextField(_('Content'), blank=True)
+    image           = models.ImageField(_('Image'), upload_to="journal_images", blank=True, null=True)
+    alignment       = models.CharField(_("Alignment"), help_text=_("Alignment of the image"), max_length=5, choices=((_("Left"), "left"), (_("Right"), "right")), blank=True, null=True)
     
     is_published    = models.BooleanField(_('Published'), default=True)
     pub_date        = models.DateTimeField(_('Publication date'), default=datetime.datetime.now())
