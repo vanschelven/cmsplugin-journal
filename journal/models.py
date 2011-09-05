@@ -37,6 +37,8 @@ class Entry(models.Model):
                         help_text=_('A slug is a short name which uniquely identifies the news item for this day'))
     excerpt         = models.TextField(_('Excerpt'), blank=True)
     content         = models.TextField(_('Content'), blank=True)
+    image           = models.ImageField(_('Image'), upload_to="journal_images", blank=True, null=True)
+    alignment       = models.CharField(_("Alignment"), help_text=_("Alignment of the image"), max_length=5, choices=((_("Left"), "left"), (_("Right"), "right")), blank=True, null=True)
     
     is_published    = models.BooleanField(_('Published'), default=True)
     pub_date        = models.DateTimeField(_('Publication date'), default=datetime.datetime.now())
@@ -79,11 +81,5 @@ class LatestEntryPlugin(CMSPlugin):
     title = models.CharField(_('Title'), max_length=255)
     limit = models.PositiveIntegerField(_('Number of entries to show'), 
                     help_text=_('Limits the number of entries that will be displayed'))
-    category = models.ManyToManyField(Category, null=True)
-    base_path = models.CharField(_('Path to the entries'), max_length=255,
-                    help_text=_('Base path set to the entries on chosen categories. Check the urls configuration.'))
-    template = models.CharField(_('Template name'), max_length=255, default='journal/latest.html',
-                                null=True, blank=True)
+    category = models.ManyToManyField(Category, blank=True, null=True, help_text=_("Leave this field blank to match all categories"))
 
-    class Meta:
-        app_label = 'cmsplugin'

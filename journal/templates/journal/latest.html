@@ -2,7 +2,7 @@
 <h1>{% trans "Latest news" %}</h1>
 <ul>
 {% for news in latest %}
-	<li><a href="{{ base_path }}/{{ news.get_relative_url }}">{{ news.title }}</a></li>
+	<li><a href="/news/{{ news.get_relative_url }}">{{ news.title }}</a></li>
 {% empty %}
 	<li>{% trans "No news yet" %}</li>
 {% endfor %}

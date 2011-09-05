@@ -1,4 +1,6 @@
+import Image
 import datetime
+from mimetypes import guess_type
 
 from django.http import HttpResponse, Http404
 from django.db.models import Q
@@ -6,6 +8,10 @@ from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.shortcuts import render_to_response
 from django.core.exceptions import ObjectDoesNotExist
 from django.template import RequestContext
+from django.utils.safestring import mark_safe
+from django.shortcuts import get_object_or_404
+
+from cms.utils.html import clean_html
 
 from journal.models import Entry
 
@@ -129,6 +135,22 @@ def entry(request, year, month, day, slug, categories=(), paginate_by=10,
     if template_name is not None:
         template = '%s_%s' % (template_name, template)
     template = 'journal/%s' % template
-    return render_to_response(template, {'date': date, 'entry': item},
-                              context_instance=RequestContext(request))
+    return render_to_response(template, {
+        'date': date,
+        'entry': item,
+        'entry_content': mark_safe(clean_html(item.content, full=False)),
+        'latest': queryset[:5],
+        }, context_instance=RequestContext(request)) 
 
+def image(request, slug=None, max_width=250):
+    entry = get_object_or_404(Entry, slug=slug)
+    if not entry.image:
+        return Http404()
+
+    image = Image.open(entry.image.path) 
+    image.thumbnail((max_width, max_width * 10), Image.ANTIALIAS)
+
+    response = HttpResponse()
+    response['Content-type'] = "image/jpeg"
+    image.save(response, "JPEG")
+    return response 
